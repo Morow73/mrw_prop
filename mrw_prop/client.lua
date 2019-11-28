@@ -38,7 +38,7 @@ local entering = ''
 local entrer = ''
 local isSingle = ''
 
-local debug = true -- debug mode
+local debug = false -- debug mode
 
 local zones = { 
 ['AIRP'] = "Los Santos International Airport",
