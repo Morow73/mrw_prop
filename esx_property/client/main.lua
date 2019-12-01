@@ -764,7 +764,7 @@ function OpenListVehiculeGarage(zone, plate, name)
 	            if(data.current.value)then	        
 		            if IsPedOnFoot(PlayerPedId()) then 
 		                if not IsAnyVehicleNearPoint(zone.x, zone.y, zone.z, 5.0) then
-			                ESX.Game.SpawnLocalVehicle(hashVeh,
+			                ESX.Game.SpawnVehicle(hashVeh,
 			                  {
 			                    x = zone.x,
 			                    y = zone.y,
