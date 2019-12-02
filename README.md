@@ -26,7 +26,7 @@ No Sale !!
 
 1) placer des appartements ou vous le souhaitez
 2) choisir l'interieur que vous voulez
-3) placer des garages utilisable par le propriétaire, si un véhicules est stocké dans le garage il ne pas étre sortit depuis un autre!
+3) placer des garages utilisable par le propriétaire, si un véhicules est stocké dans le garage il ne peux pas étre sortit depuis un autre!
 4) placer un coffre ou vous le souhaitez dans l'appartements
 5) choisir un prix
 6) peut etre utiliser comme utilitaire pour votre serveur ou simplement comme module rp 
