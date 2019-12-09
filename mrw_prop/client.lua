@@ -148,7 +148,6 @@ Citizen.CreateThread(function()
 
 	local var1, var2 = GetStreetNameAtCoord(posA.x, posA.y, posA.z, Citizen.ResultAsInteger(), Citizen.ResultAsInteger())
 	local current_zone = zones[GetNameOfZone(posA.x, posA.y, posA.z)]
-	local label = GetStreetNameFromHashKey(var1)
 
 	local items = { "Low", "Middle", "Modern", "High", "Luxe", "Motel", "Entrepot (grand)", "Entrepot (moyen)", "Entrepot (petit)" , "Retour"}
     local itemsCount = #items
@@ -166,11 +165,11 @@ Citizen.CreateThread(function()
 				local Out = {x = pos.x, y = pos.y, z = pos.z+2}
 				
 				entering = json.encode(PlayerCoord)
-				outside = json.encode(Out)
+				outside  = json.encode(Out)
 
                 PedPosition = pos
                 DrawMarker(1, pos.x, pos.y, pos.z-1, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 1.0, 1.5, 2.0, 255, 0, 0, 100, false, true, 2, false, false, false, false)  
-                ESX.ShowNotification('position de la porte '..pos.. ', Adresse '..label.. '')
+                ESX.ShowNotification('position de la porte '..pos.. ', Adresse '..current_zone.. '')
                 ESX.ShowNotification('position de la sortie '..pos..'')
 
             elseif WarMenu.MenuButton('Placer un garage ~g~(non obligatoire)', 'Proprieter') then
@@ -343,7 +342,20 @@ Citizen.CreateThread(function()
 				roommenu = json.encode(CoffreCoord)
                 ESX.ShowNotification('position du coffre '..pos.. '')
                 DrawMarker(1, pos.x, pos.y, pos.z-1, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 1.0, 1.5, 2.0, 255, 255, 255, 100, false, true, 2, false, false, false, false) 
-     
+            
+            elseif WarMenu.MenuButton('Entrer un label', 'Proprieter') then
+
+            	DisplayOnscreenKeyboard(1, "FMMC_MPM_NA", "", "", "", "", "", 20)
+		        while (UpdateOnscreenKeyboard() == 0) do
+		            DisableAllControlActions(0);
+		           Citizen.Wait(1)
+		        end
+		        if (GetOnscreenKeyboardResult()) then
+		            label = GetOnscreenKeyboardResult()
+		            if label == nil then
+		               ESX.ShowNotification('~r~Vous devez entrer un label')
+		            end     
+		        end 
 
 		    elseif WarMenu.MenuButton('Prix', 'Proprieter') then
                 
@@ -499,3 +511,4 @@ function Destroy()
     SetFocusEntity(PlayerPedId())
 	print('retour')
 end
+
