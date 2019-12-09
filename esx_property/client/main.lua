@@ -140,7 +140,7 @@ function ExitProperty(name)
 	CurrentProperty = nil
 
 	if property.isSingle then
-		outside = property.entering
+		outside = property.outside
 	else
 		outside = GetGateway(property).outside
 	end
