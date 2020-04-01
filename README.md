@@ -65,5 +65,5 @@ No Sale !!
 - you have to wait for the server restart to access the property
 
 ```
-start mrw_prop
+ensure mrw_prop
 ```
