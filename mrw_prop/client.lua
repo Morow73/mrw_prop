@@ -38,6 +38,8 @@ local price = ''
 local entering = ''
 local entrer = ''
 local isSingle = ''
+local garage = ''
+local price = 0 
 
 local debug = false -- debug mode
 
@@ -133,6 +135,7 @@ local zones = {
 ['ZQ_UAR'] = "Davis Quartz" 
 }
 
+
 Citizen.CreateThread(function()
 
 	WarMenu.CreateMenu('Proprieter', '~w~Last Dream')
@@ -144,7 +147,7 @@ Citizen.CreateThread(function()
 	local currentItemIndex = 1
     local selectedItemIndex = 1
 
-    local posA = GetEntityCoords(GetPlayerPed(-1))
+    local posA = GetEntityCoords(PlayerPedId())
 
 	local var1, var2 = GetStreetNameAtCoord(posA.x, posA.y, posA.z, Citizen.ResultAsInteger(), Citizen.ResultAsInteger())
 	local current_zone = zones[GetNameOfZone(posA.x, posA.y, posA.z)]
@@ -152,32 +155,31 @@ Citizen.CreateThread(function()
 	local items = { "Low", "Middle", "Modern", "High", "Luxe", "Motel", "Entrepot (grand)", "Entrepot (moyen)", "Entrepot (petit)" , "Retour"}
     local itemsCount = #items
 
-    local n = math.random(0,2000)
 
 	while true do
 
 		if WarMenu.IsMenuOpened('Proprieter') then
 
-			local pos = GetEntityCoords(GetPlayerPed(-1))
+			local pos = GetEntityCoords(PlayerPedId())
 			
 			if WarMenu.MenuButton('Placer une entrée', 'Proprieter') then   
-				local PlayerCoord = {x = pos.x, y = pos.y, z = pos.z-1}                          
-				local Out = {x = pos.x, y = pos.y, z = pos.z+2}
+				local PlayerCoord = {x = ESX.Math.Round(pos.x, 4), y = ESX.Math.Round(pos.y, 4), z = ESX.Math.Round(pos.z-1, 4)}                          
+				local Out = {x = ESX.Math.Round(pos.x, 4), y = ESX.Math.Round(pos.y, 4), z = ESX.Math.Round(pos.z+2, 4)}
 				
 				entering = json.encode(PlayerCoord)
 				outside  = json.encode(Out)
 
                 PedPosition = pos
                 DrawMarker(1, pos.x, pos.y, pos.z-1, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 1.0, 1.5, 2.0, 255, 0, 0, 100, false, true, 2, false, false, false, false)  
-                ESX.ShowNotification('position de la porte '..pos.. ', Adresse '..current_zone.. '')
-                ESX.ShowNotification('position de la sortie '..pos..'')
+                ESX.ShowNotification('position de la porte : ~b~'..PlayerCoord.x..' , '..PlayerCoord.y..' , '..PlayerCoord.z.. '~w~, Adresse : ~b~'..current_zone.. '')
+                ESX.ShowNotification('position de la sortie : ~b~'..PlayerCoord.x..' , '..PlayerCoord.y..' , '..PlayerCoord.z..'')
 
             elseif WarMenu.MenuButton('Placer un garage ~g~(non obligatoire)', 'Proprieter') then
-				local GaragePos = {x = pos.x, y = pos.y, z = pos.z-1}
-				
+				local GaragePos = {x = ESX.Math.Round(pos.x, 4), y = ESX.Math.Round(pos.y, 4), z = ESX.Math.Round(pos.z-1, 4)}     
               	garage = json.encode(GaragePos)
+
                 DrawMarker(1, pos.x, pos.y, pos.z-1, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 1.0, 1.5, 2.0, 255, 255, 255, 100, false, true, 2, false, false, false, false)      
-                ESX.ShowNotification('position du garage '..pos.. '')
+                ESX.ShowNotification('position du garage :~b~ '..GaragePos.x..' , '..GaragePos.y..' , '..GaragePos.z..  '')
 
             elseif WarMenu.CheckBox('Visiter | Apercu', checkbox) then
             	
@@ -201,7 +203,6 @@ Citizen.CreateThread(function()
 		    		if checkbox == false then 
                         Cam('Low')
 					else
-						name = 'LowEndApartment'..n
 						ipl = '[]'
 						inside = '{"x":265.307,"y":-1002.802,"z":-101.008}'
 						exit = '{"x":266.0773,"y":-1007.3900,"z":-101.008}'
@@ -216,7 +217,6 @@ Citizen.CreateThread(function()
 		    		if checkbox == false then 
                         Cam('Middle')
 					else
-						name = 'Middle'..n
 						ipl = '[]'
 						inside = '{"x":-612.16,"y":59.06,"z":97.2}'
 						exit = '{"x":-603.4308,"y":58.9184,"z":97.2001}'
@@ -231,7 +231,6 @@ Citizen.CreateThread(function()
 		    		if checkbox == false then 
 		    			Cam('Modern')
 					else
-						name = 'Modern'..n
 						ipl = '["apa_v_mp_h_01_a"]'
 						inside = '{"x":-785.13,"y":315.79,"z":187.91}'
 						exit = '{"x":-786.87,"y":315.7497,"z":186.91}'
@@ -246,7 +245,6 @@ Citizen.CreateThread(function()
 		    		if checkbox == false then 
 		    			Cam('High')
 					else
-						name = 'High'..n
 						ipl = '[]'
 						inside = '{"x":-1459.17,"y":-520.58,"z":54.929}'
 						exit = '{"x":-1451.6394,"y":-523.5562,"z":55.9290}'
@@ -261,7 +259,6 @@ Citizen.CreateThread(function()
 		    	   if checkbox == false then 
 		    	   	   Cam('Luxe')
 					else
-						name = 'luxe'..n
 						ipl = '[]'
 						inside = '{"x":-680.6088,"y":590.5321,"z":145.39}'
 						exit = '{"x":-681.6273,"y":591.9663,"z":144.3930}'				
@@ -277,7 +274,6 @@ Citizen.CreateThread(function()
 		    	   if checkbox == false then 
 		    	   	    Cam('Motel')   
 					else
-						name = 'Hotel'..n
 						ipl = '["hei_hw1_blimp_interior_v_motel_mp_milo_"]'
 						inside = '{"x":151.45,"y":-1007.57,"z":-98.9999}'
 						exit = '{"x":151.3258,"y":-1007.7642,"z":-100.0000}'
@@ -292,7 +288,6 @@ Citizen.CreateThread(function()
 		    	    if checkbox == false then 
 		    	    	Cam('Entrepot1')
 					else
-						name = 'Grandentrepot'..n
 						ipl = '[]'
 						inside = '{"x":1026.5056,"y":-3099.8320,"z":-38.9998}'
 						exit   = '{"x":998.1795"y":-3091.9169,"z":-39.9999}'
@@ -307,7 +302,6 @@ Citizen.CreateThread(function()
 		    	    if checkbox == false then 
                        Cam('Entrepot2')
 					else
-						name = 'EntrepotMoyen'..n
 						ipl = '[]'
 						inside = '{"x":1048.5067,"y":-3097.0817,"z":-38.9999}'
 						exit   = '{"x":1072.5505,"y":-3102.5522,"z":-39.9999}'
@@ -322,7 +316,6 @@ Citizen.CreateThread(function()
 		    	    if checkbox == false then 
                       Cam('Entrepot3')
 					else
-						name = 'Petitentrepot'..n
 						ipl = '[]'
 						inside = '{"x":1088.1834,"y":-3099.3547,"z":-38.9999}'
 						exit   = '{"x":1104.6102,"y":-3099.4333,"z":-39.9999}'
@@ -338,62 +331,40 @@ Citizen.CreateThread(function()
 
 		    elseif WarMenu.MenuButton('Placer le coffre', 'Proprieter') then
 
-				local CoffreCoord = {x = pos.x, y = pos.y, z = pos.z-1} 
+				local CoffreCoord = {x = ESX.Math.Round(pos.x, 4), y = ESX.Math.Round(pos.y, 4), z = ESX.Math.Round(pos.z-1, 4)} 
 				roommenu = json.encode(CoffreCoord)
-                ESX.ShowNotification('position du coffre '..pos.. '')
+                ESX.ShowNotification('position du coffre :~b~'..CoffreCoord.x..' , '..CoffreCoord.y..' , '..CoffreCoord.z.. '')
                 DrawMarker(1, pos.x, pos.y, pos.z-1, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 1.0, 1.5, 2.0, 255, 255, 255, 100, false, true, 2, false, false, false, false) 
-            
+
+            elseif WarMenu.MenuButton('Entrer un nom', 'Proprieter') then 
+                name  =  OpenKeyboard('name')
             elseif WarMenu.MenuButton('Entrer un label', 'Proprieter') then
-
-            	DisplayOnscreenKeyboard(1, "FMMC_MPM_NA", "", "", "", "", "", 20)
-		        while (UpdateOnscreenKeyboard() == 0) do
-		            DisableAllControlActions(0);
-		           Citizen.Wait(1)
-		        end
-		        if (GetOnscreenKeyboardResult()) then
-		            label = GetOnscreenKeyboardResult()
-		            if label == nil then
-		               ESX.ShowNotification('~r~Vous devez entrer un label')
-		            end     
-		        end 
-
+                label = OpenKeyboard('label')
 		    elseif WarMenu.MenuButton('Prix', 'Proprieter') then
-                
-		        DisplayOnscreenKeyboard(1, "FMMC_MPM_NA", "", "", "", "", "", 100)
-		        while (UpdateOnscreenKeyboard() == 0) do
-		            DisableAllControlActions(0);
-		           Citizen.Wait(1)
-		        end
-		        if (GetOnscreenKeyboardResult()) then
-		             result = tonumber(GetOnscreenKeyboardResult())
-		            if tonumber(result) == nil then
-		               ESX.ShowNotification('~r~Vous devez entrer un nombre')
-		            end     
-		        end 
+		        price = OpenKeyboard('price')
 		    elseif WarMenu.MenuButton('Annuler', 'Proprieter') then
-                
+
                 if PedPosition ~= nil then
 		    	   SetEntityCoords(PlayerPedId(), PedPosition.x, PedPosition.y, PedPosition.z)
-		    	end   
+		    	end  
+
 		    	Citizen.Wait(50)
 		    	WarMenu.CloseMenu('Proprieter')
 		    	ESX.ShowNotification('Création de propriété annulé')
   
 		    elseif WarMenu.MenuButton('Valider', 'Proprieter') then
 
-		    	if garage == nil then 
-		    	   garage = ''
-		    	end  	
-
-                local price = tonumber(result)
-
-                if price == nil then
-		            ESX.ShowNotification('~r~Vous n\'avez aucun prix assingné')
+                if tonumber(price) == nil or tonumber(price) == 0 then
+		            ESX.ShowNotification('~r~Vous n\'avez aucun prix assingné !')
 		        else 
-		    	   TriggerServerEvent('mrw_prop:Save', name, label, entering, exit, inside, outside, ipl, isSingle, isRoom, isGateway, roommenu, garage, price)
+		        	if name == '' then 
+		        		ESX.ShowNotification('~r~Vous n\'avez aucun nom assingné !')
+		        	else 	
+		    	       TriggerServerEvent('mrw_prop:Save', name, label, entering, exit, inside, outside, ipl, isSingle, isRoom, isGateway, roommenu, garage, price)
 		    	   
-		    	   Citizen.Wait(15)
-		    	   SetEntityCoords(PlayerPedId(), PedPosition.x, PedPosition.y, PedPosition.z)
+			    	   Citizen.Wait(15)
+			    	   SetEntityCoords(PlayerPedId(), PedPosition.x, PedPosition.y, PedPosition.z)
+			    	end
 		    	end   
 		    	
                 if debug then 
@@ -405,10 +376,10 @@ Citizen.CreateThread(function()
 			    	print('roommenu' ..roommenu)
 			    	print('exit' ..exit)
 					print('outside' ..outside)
+					print('price'..price)
 					if garage ~= nil then 
 						print('garage'..garage)
-					end	
-			    	print(tonumber(result))   
+					end	   
 		    	end                	
 			end
 
@@ -421,11 +392,44 @@ end)
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(1)
-		if IsControlPressed(0, 168) and ESX.PlayerData.job ~= nil and ESX.PlayerData.job.name == 'realestateagent' then
+		if IsControlPressed(0, 168) then
 		   WarMenu.OpenMenu('Proprieter')
 	    end
 	end
 end)
+
+local function noSpace(str)
+   local normalisedString = string.gsub(str, "%s+", "")
+   return normalisedString
+end
+
+function OpenKeyboard(type)
+    DisplayOnscreenKeyboard(1, "FMMC_MPM_NA", "", "", "", "", "", 20)
+    while (UpdateOnscreenKeyboard() == 0) do
+        DisableAllControlActions(0);
+        Citizen.Wait(1)
+    end
+    if (GetOnscreenKeyboardResult()) then
+    	local result = GetOnscreenKeyboardResult()
+    	if result == nil then
+	        ESX.ShowNotification('~r~Saisis invalide !')
+	        return
+	    end 
+
+        if type == 'name' then 	
+            return noSpace(result)
+        elseif type == 'price' then  
+        	result = tonumber(GetOnscreenKeyboardResult())
+            if tonumber(result) == nil then 
+           	   ESX.ShowNotification("~r~Entrer un prix !")
+           	   return 
+            end 
+            return tonumber(result)
+        else 
+            return result    
+	    end        
+    end 
+end
 
 function Cam(type)
 	if type == 'Low' then 
@@ -511,4 +515,3 @@ function Destroy()
     SetFocusEntity(PlayerPedId())
 	print('retour')
 end
-
