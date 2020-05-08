@@ -13,7 +13,7 @@ AddEventHandler('mrw_prop:Save', function(name, label, entering, exit, inside, o
     }, 
     function(result)
         if result[1] ~= nil then 
-       	   TriggerClientEvent('esx:showNotification', x_source, 'Ce nom éxiste déja ! Saisissant un autre ')
+       	   TriggerClientEvent('esx:showNotification', x_source, 'Ce nom éxiste déja !')
        	else 
        	   Insert(x_source, name, label, entering, exit, inside, outside, ipl, isSingle, isRoom, isGateway, roommenu, garage, price)   
         end 
