@@ -575,13 +575,7 @@ end)
 
 function UpdateStateOtherGarage(plate)
 
-  MySQL.Sync.execute("UPDATE owned_vehicles SET garageperso=false WHERE plate= @plate",
-    {
-     ['@plate'] = plate
-    }
-  )
-
-  MySQL.Sync.execute("UPDATE owned_vehicles SET state=false WHERE plate= @plate",
+  MySQL.Sync.execute("UPDATE owned_vehicles SET garageperso=false, state=false WHERE plate= @plate",
     {
      ['@plate'] = plate
     }
