@@ -352,10 +352,10 @@ Citizen.CreateThread(function()
 		    elseif WarMenu.MenuButton('Valider', 'Proprieter') then
 
                 if tonumber(price) == nil or tonumber(price) == 0 then
-		            ESX.ShowNotification('~r~Vous n\'avez aucun prix assingné !')
+		            ESX.ShowNotification('~r~Vous n\'avez aucun prix assigné !')
 		        else 
 		        	if name == '' then 
-		        		ESX.ShowNotification('~r~Vous n\'avez aucun nom assingné !')
+		        		ESX.ShowNotification('~r~Vous n\'avez aucun nom assigné !')
 		        	else 	
 		    	       TriggerServerEvent('mrw_prop:Save', name, label, entering, exit, inside, outside, ipl, isSingle, isRoom, isGateway, roommenu, garage, price)
 		    	   
