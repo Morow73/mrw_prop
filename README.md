@@ -3,7 +3,7 @@ FXServer ESX mrw_prop
 
 [REQUIREMENTS]
 
-- es_extended => https://github.com/ESX-Org/es_extended
+- es_extended => https://github.com/ESX-Org/es_extended/tree/v1-final
 
 [CREDIT] <3
 
