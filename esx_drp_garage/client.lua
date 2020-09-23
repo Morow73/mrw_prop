@@ -189,7 +189,7 @@ function ListVehiclesMenu()
 			elements = elements,
 		},
 		function(data, menu)
-			if(data.current.value.state)then
+			if(data.current.value.state and not data.current.value.garageperso)then
 			    menu.close()
 				SpawnVehicle(data.current.value.vehicle)
 			else
